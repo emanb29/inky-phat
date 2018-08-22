@@ -7,11 +7,12 @@ except ImportError:
     exit("This script requires the pillow module\nInstall with: sudo pip install pillow")
 
 
-__version__ = '0.1.1'
+__version__ = '1.0.0'
 
 WHITE = 0
 BLACK = 1
 RED = 2
+YELLOW = 2
 
 WIDTH = 212
 HEIGHT = 104
@@ -31,6 +32,29 @@ for method in ["arc", "bitmap", "chord", "draw", "ellipse", "fill", "font", "fon
 # Selectively export image methods into the module namespace
 for method in ["paste", "putpixel", "getpixel"]:
     globals()[method] = getattr(_image, method)
+
+def set_version(version):
+    """Set the Inky pHAT version.
+
+    Generally you shouldn't need to do this. Most likely you have a v2, and the version is auto-detected.
+
+    :param version: Should be either 1 (for original) or 2 (for newer)
+
+    """
+    return _panel.set_version(version)
+
+def set_colour(colour):
+    """Set the Inky pHAT colour.
+
+    You must call this before trying to display an image on Inky pHAT.
+
+    Setting the colour determines whether you have a Red/Black, Yellow/Black or Black & White Inky pHAT,
+    and will ensure the correct update and display settings for each combination.
+
+    :param colour: Should be one of 'red', 'black' or 'yellow'
+
+    """
+    return _panel.set_colour(colour)
 
 def get_version():
     return _panel.inky_version
